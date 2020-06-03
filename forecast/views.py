@@ -2,11 +2,36 @@ import os
 import json
 import mysql.connector
 from mysql.connector import Error
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, FormView
+from . forms import ForecastForm
 
 
-class ForecastDetailView(TemplateView):
+class ForeForm(FormView):
     template_name = 'forecast/analysis_result.html'
+    form_class = ForecastForm
+    success_url = '/forecast'
+
+    def form_valid(self, form, **kwargs):
+        context = self.get_context_data(**kwargs)
+
+        _path = os.path.dirname(__file__)
+        with open(_path+'/data_for_analysis_db.json', 'r') as f:
+            data = json.load(f)
+
+        ForecastDate = form.cleaned_data['forecastedate']
+        ScenarioName = form.cleaned_data['scenarioname']
+        AreaID = int(form.cleaned_data['area_id'])
+
+        result_plot = [
+            item for item in data if
+            item['ForecastDate'].split(' ')[:-1] == [ForecastDate]
+            and item['ScenarioName'] == ScenarioName
+            and item['AreaID'] == AreaID
+        ]
+
+        context['plot'] = result_plot
+        context['form'] = ForecastForm
+        return self.render_to_response(context)
 
 
 class ForecastLoadDatabaseView(TemplateView):

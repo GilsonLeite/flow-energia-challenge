@@ -5,7 +5,6 @@ from . views import HomeView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', HomeView.as_view(), name='home'),
-    path('forecast/', include(
-        ('forecast.urls', 'cadastro'), namespace='forecast')),
+    path('forecast/', include(('forecast.urls', 'forecast'), namespace='forecast')),
 
 ]
