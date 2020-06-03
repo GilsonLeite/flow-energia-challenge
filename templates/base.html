@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="description" content="{% block description %}{% endblock description %}" />
+    <meta name="keywords" content="{% block keywords %}{% endblock %}">
+    <link rel="stylesheet" href="{% static 'bootstrap/css/base.css' %}">
+    {% block plus_css %}{% endblock %}
+</head>
+
+<body>
+    {% block menu %}
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+        <h5 class="my-0 mr-md-auto font-weight-normal">
+            Flow Energia</h5>
+        <nav class="my-2 my-md-0 mr-md-3">
+            <a class="p-2 text-dark" href="{% url 'home' %}">Home</a>
+            <a class="p-2 text-dark" href="{% url 'forecast:analysis_result' %}">Analyze with local DB</a>
+            <a class="p-2 text-dark" href="{% url 'forecast:analysis_load_db' %}">Load DataBase</a>
+
+        </nav>
+    </div>
+    {% endblock %}
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+    {% block footer %}
+    <div class="container">
+        <footer class="pt-4 my-md-5 pt-md-5 border-top">
+            <div class="row">
+                <div class="col-12 col-md text-center">
+                    <small class="d-block mb-3 text-muted">Flow Energia 2020</small>
+                </div>
+            </div>
+        </footer>
+    </div>
+    {% endblock %}
+</body>
+
+{% block plus_js %}{% endblock %}
+
+</html>

@@ -1,22 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
+{% load static %}
+{% block title %} Flow Energia - Analysis {% endblock %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flow Energia</title>
-</head>
+{% block content %}
+<form action="" method="post">{% csrf_token %}
+    <div class="form-row">
+        {% for field in form %}
+        <div class="form-group col-md-4">
+            {{ field.label }}
+            {{ field }}
+        </div>
+        {% endfor %}
+    </div>
+    <button type="submit" class="btn btn-primary">Filter</button>
+</form>
 
-<body>
+{{ plot }}
+{% endblock %}
 
-    <form action="" method="post">{% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Filter" />
-    </form>
-
-    {{ plot }}
-    <!-- {% if form.enviado  %}{{ x }} {% endif %} -->
-
-</body>
-
-</html>
+{% block plus_js %}
+<script src="{% static 'bootstrap/js/jquery-2.1.1.min.js' %}"></script>
+<script src="{% static 'bootstrap/js/jquery-mask-1.14.10.js' %}"></script>
+<script src="{% static 'bootstrap/js/mask.js' %}"></script>
+{% endblock %}

@@ -1,20 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flow Energia</title>
-</head>
-
-<body>
-
-
-
-    <p><a href="{% url 'forecast:analysis_result' %}">Analyze with local DB</a></p>
-    <p><a href="{% url 'forecast:analysis_load_db' %}">Load DataBase</a></p>
-
-
-</body>
-
-</html>
+{% extends "base.html" %}
+{% block title %}Flow Energia - Home {% endblock %}
+{% block content %}
+<row>
+    <div class="col-sm-12">
+        <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+            <h1 class="display-4">Welcome!</h1>
+            <h3 class="lead">
+                Flow Energia makes analyzes for the sale and purchase of electricity.
+            </h3>
+            <p>Access the menu to view the latest results.</p>
+        </div>
+    </div>
+</row>
+{% endblock %}
