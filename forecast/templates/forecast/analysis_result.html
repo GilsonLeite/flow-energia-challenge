@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
 {% block title %} Flow Energia - Analysis {% endblock %}
-
 {% block content %}
 <form action="" method="post">{% csrf_token %}
     <div class="form-row">
@@ -14,12 +13,60 @@
     </div>
     <button type="submit" class="btn btn-primary">Filter</button>
 </form>
-
-{{ plot }}
+<canvas id="line-chart" width="600" height="250"></canvas>
+<div>
+    <h3>Forecast based on first week</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                {% for resul  in plot %}
+                <th scope="col">{{ resul.ScenarioType }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                {% for resul  in plot %}
+                <td>{{ resul.Value }}</td>
+                {% endfor %}
+            </tr>
+        </tbody>
+    </table>
+</div>
 {% endblock %}
 
 {% block plus_js %}
 <script src="{% static 'bootstrap/js/jquery-2.1.1.min.js' %}"></script>
 <script src="{% static 'bootstrap/js/jquery-mask-1.14.10.js' %}"></script>
 <script src="{% static 'bootstrap/js/mask.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+<script>
+    /*
+        Os Arrays labels e data não consegui converter os valores de forma que carregasse
+        o grafico, deixei um resultado fixo apenas para visualizar como ficaria.
+    */
+    new Chart(document.getElementById("line-chart"), {
+        type: 'line',
+        data: {
+            labels: ['2020/04-rv0', '2020/04-rv1', '2020/04-rv2', '2020/04-rv3'],
+            datasets: [{
+                data: [55515.00000, 55440.00000, 55440.00000, 55440.00000],
+                label: "Abril",
+                borderColor: "#3e95cd",
+                fill: true
+            },
+            ]
+        },
+        options: {
+            title: {
+                display: true,
+                text: 'Forecast based on first week'
+            }
+        }
+    });
+
+
+</script>
+
 {% endblock %}

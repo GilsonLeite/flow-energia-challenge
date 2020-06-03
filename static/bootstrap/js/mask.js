@@ -1,3 +1,3 @@
 $(function () {
-    $('#id_forecastedate').mask('9999/99/99');
+    $('#id_forecastedate').mask('9999-99-99');
 });

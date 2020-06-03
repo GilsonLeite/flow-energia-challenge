@@ -5,6 +5,8 @@ from mysql.connector import Error
 from django.views.generic import TemplateView, FormView
 from . forms import ForecastForm
 
+# Django CBV Class Based Views
+
 
 class ForeForm(FormView):
     template_name = 'forecast/analysis_result.html'
@@ -14,21 +16,23 @@ class ForeForm(FormView):
     def form_valid(self, form, **kwargs):
         context = self.get_context_data(**kwargs)
 
+        # Load data for analysis
         _path = os.path.dirname(__file__)
         with open(_path+'/data_for_analysis_db.json', 'r') as f:
             data = json.load(f)
 
+        # Get the form data
         ForecastDate = form.cleaned_data['forecastedate']
         ScenarioName = form.cleaned_data['scenarioname']
         AreaID = int(form.cleaned_data['area_id'])
 
+        # Prepare data for plotting
         result_plot = [
             item for item in data if
             item['ForecastDate'].split(' ')[:-1] == [ForecastDate]
             and item['ScenarioName'] == ScenarioName
             and item['AreaID'] == AreaID
         ]
-
         context['plot'] = result_plot
         context['form'] = ForecastForm
         return self.render_to_response(context)
@@ -64,6 +68,7 @@ class ForecastLoadDatabaseView(TemplateView):
             data_for_analysis = [
                 item for item in result_filter if item['TargetLabel'] == '2020-W14']
 
+            # Saves the data in json format for analysis
             _path = os.path.dirname(__file__)
             with open(_path+'/data_for_analysis_db.json', 'w', encoding='utf-8') as f:
                 json.dump(data_for_analysis, f,
